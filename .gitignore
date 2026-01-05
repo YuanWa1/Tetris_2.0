@@ -47,5 +47,8 @@ CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
-*.cmake
+*Config.cmake
+*ConfigVersion.cmake
+*Targets.cmake
+*Targets-*.cmake
 !CMakeLists.txt
