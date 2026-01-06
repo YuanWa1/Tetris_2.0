@@ -52,3 +52,6 @@ Makefile
 *Targets.cmake
 *Targets-*.cmake
 !CMakeLists.txt
+
+
+third_party/glfw
