@@ -21,10 +21,10 @@ void Game::init() {
     };
 
     gameObject.setVertices(vertices);
-
-    for (auto &v : gameObject.getVertices()) {
-        cout << v << endl;
-    }
+    //
+    // for (auto &v : gameObject.getVertices()) {
+    //     cout << v << endl;
+    // }
 
 
     m_shader.draw(gameObject);
