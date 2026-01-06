@@ -3,6 +3,7 @@
 //
 
 #include "Render.h"
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -61,7 +62,7 @@ Render::Render(const std::string& vert, const std::string& frag)
     glDeleteShader(fragment);
 }
 
-void Render::draw() const {
+void Render::draw(GameObject& game_object) const {
     unsigned int vao, vbo;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -70,7 +71,7 @@ void Render::draw() const {
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), m_vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, game_object.getVertices().size() * sizeof(float), game_object.getVertices().data(), GL_STATIC_DRAW);
     // Now we have pointed which is our vertex data using the m_vbo
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);

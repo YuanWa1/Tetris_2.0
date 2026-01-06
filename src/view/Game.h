@@ -7,6 +7,8 @@
 #include  "CreateWindow.h"
 #include  "Render.h"
 #include "controller/Input.h"
+#include <vector>
+#include  "model/GameObject.h"
 
 class Game {
 public:
@@ -23,6 +25,8 @@ private:
     CreateWindow m_window;
     Render m_shader;
     Input m_input;
+
+    std::vector<GameObject> scene;
 
     unsigned int m_vao;
     unsigned int m_vbo;

@@ -3,6 +3,8 @@
 //
 
 #include "Game.h"
+#include "model/GameObject.h"
+
 Game::Game(): m_window(600, 600, "Tetris_2.0"), m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag"), m_input() {
 init();
 }
@@ -10,23 +12,35 @@ init();
 void Game::init() {
     m_input.init(m_window.getWindow());
 
-    float vertices[] = {
+    //Create new game object
+    GameObject gameObject;
+    std::vector<float> vertices = {
         -0.5f, -0.5f, 0.0f,
          0.5f, -0.5f, 0.0f,
          0.0f,  0.5f, 0.0f
     };
 
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
-    // Now we have our vertex Array object, which is the rule for the vertex drawing
+    gameObject.setVertices(vertices);
 
-    glGenBuffers(1, &m_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    // Now we have pointed which is our vertex data using the m_vbo
+    for (auto &v : gameObject.getVertices()) {
+        cout << v << endl;
+    }
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(0);
+
+    m_shader.draw(gameObject);
+
+
+    // glGenVertexArrays(1, &m_vao);
+    // glBindVertexArray(m_vao);
+    // // Now we have our vertex Array object, which is the rule for the vertex drawing
+    //
+    // glGenBuffers(1, &m_vbo);
+    // glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+    // // Now we have pointed which is our vertex data using the m_vbo
+    //
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    // glEnableVertexAttribArray(0);
 }
 
 
@@ -34,6 +48,7 @@ void Game::init() {
 void Game::run() {
     while (!glfwWindowShouldClose(m_window.getWindow())) {
 
+        m_input.beginFrame();
         glfwPollEvents();
 
         update();
@@ -55,6 +70,7 @@ void Game::update() {
     }
     if (m_input.pressed(GLFW_KEY_W)) {
         cout << "W pressed : move forward" << endl;
+
     }
     if (m_input.pressed(GLFW_KEY_S)) {
         cout << "S pressed : move backward" << endl;
