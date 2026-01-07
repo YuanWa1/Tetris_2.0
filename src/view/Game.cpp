@@ -13,20 +13,30 @@ void Game::init() {
     m_input.init(m_window.getWindow());
 
     //Create new game object
-    GameObject gameObject;
-    std::vector<float> vertices = {
+    GameObject gameObject1;
+    std::vector<float> vertices1 = {
         -0.5f, -0.5f, 0.0f,
          0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+         0.0f,  0.5f, 0.0f,
+
+
     };
 
-    // gameObject.setVertices(vertices);
-    m_object.setVertices(vertices);
-    //
-    // for (auto &v : gameObject.getVertices()) {
-    //     cout << v << endl;
-    // }
-    scene.push_back(std::ref(m_object));
+    GameObject gameObject2;
+    std::vector<float> vertices2 = {
+        -0.1f, -0.1f, 0.0f,
+         0.1f, -0.1f, 0.0f,
+         0.0f,  0.1f, 0.0f
+    };
+
+    gameObject1.setVertices(vertices1);
+
+    gameObject2.setVertices(vertices2);
+
+    scene.push_back(gameObject1);
+    scene.push_back(gameObject2);
+
+
 }
 
 
@@ -40,9 +50,11 @@ void Game::run() {
 
         update();
         // m_shader.use();
-        m_shader.draw(m_object, m_vao, m_vbo);
-        render();
-
+        // m_shader.draw(m_object, m_vao, m_vbo);
+        glClear(GL_COLOR_BUFFER_BIT);
+        for (auto& object : scene) {
+            m_shader.draw(object,m_vao,m_vbo);
+        }
 
         glfwSwapBuffers(m_window.getWindow());
     }
@@ -60,17 +72,22 @@ void Game::update() {
     float speed = 1.0f;      // units per second
     float dy = speed * dt;
 
+
+    GameObject& m_object = scene[1];
+
     // m_input.update(m_window.getWindow());
     if (m_input.pressed(GLFW_KEY_SPACE)) {
         cout << "Space pressed : jump" << endl;
     }
+
+
     if (m_input.held(GLFW_KEY_W)) {
         std::vector<float> vert = m_object.getVertices();
         for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
             vert[i] += dy;
         }
         m_object.setVertices(vert);
-        cout << "W pressed : move forward" << endl;
+        cout << "W held : move forward" << endl;
 
     }
 
@@ -80,7 +97,7 @@ void Game::update() {
             vert[i] += dy;
         }
         m_object.setVertices(vert);
-        cout << "W pressed : move forward" << endl;
+        cout << "D held : move forward" << endl;
 
     }
 
@@ -90,40 +107,25 @@ void Game::update() {
             vert[i] -= dy;
         }
         m_object.setVertices(vert);
-        cout << "W pressed : move forward" << endl;
+        cout << "A held : move forward" << endl;
 
     }
-
-    if (m_input.held(GLFW_KEY_S)) {
-        std::vector<float> vert = m_object.getVertices();
-        for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
-            vert[i] -= dy;
-        }
-        m_object.setVertices(vert);
-        cout << "W pressed : move forward" << endl;
-
-    }
-
-
-
 
     if (m_input.pressed(GLFW_KEY_S)) {
         cout << "S pressed : move backward" << endl;
     }
 
+    if (m_input.held(GLFW_KEY_S)) {
+        std::vector<float> vert = m_object.getVertices();
+        for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+            vert[i] -= dy;
+        }
+        m_object.setVertices(vert);
+        cout << "S held : move forward" << endl;
 
-}
+    }
 
-void Game::render() {
-    // glClearColor(1.0f, 0.0f, 0.25, 1.0f);
-    // glClear(GL_COLOR_BUFFER_BIT);
 
-    m_shader.use();
-
-    // we have our data binded, and we have set the rule for strides too
-    // we have to bind the vertex array again;
-    glBindVertexArray(m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 Game::~Game() {
