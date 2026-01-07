@@ -62,8 +62,8 @@ Render::Render(const std::string& vert, const std::string& frag)
     glDeleteShader(fragment);
 }
 
-void Render::draw(GameObject& game_object) const {
-    unsigned int vao, vbo;
+void Render::draw(GameObject& game_object, unsigned int &vao, unsigned int &vbo ) const {
+    // unsigned int vao, vbo;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     // Now we have our vertex Array object, which is the rule for the vertex drawing
@@ -71,18 +71,20 @@ void Render::draw(GameObject& game_object) const {
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    glBufferData(GL_ARRAY_BUFFER, game_object.getVertices().size() * sizeof(float), game_object.getVertices().data(), GL_STATIC_DRAW);
+    const auto& verts = game_object.getVertices();
+    glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_DYNAMIC_DRAW);
     // Now we have pointed which is our vertex data using the m_vbo
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 
-    glClearColor(1.0f, 0.0f, 0.25, 1.0f);
+    // glClearColor(1.0f, 0.0f, 0.25, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBindVertexArray(vao);
-    // use();
+
 }
+
 
 void Render::use() const
 {

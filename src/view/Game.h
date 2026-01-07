@@ -27,6 +27,7 @@ private:
     Input m_input;
 
     std::vector<GameObject> scene;
+    GameObject m_object;
 
     unsigned int m_vao;
     unsigned int m_vbo;

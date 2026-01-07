@@ -20,27 +20,13 @@ void Game::init() {
          0.0f,  0.5f, 0.0f
     };
 
-    gameObject.setVertices(vertices);
+    // gameObject.setVertices(vertices);
+    m_object.setVertices(vertices);
     //
     // for (auto &v : gameObject.getVertices()) {
     //     cout << v << endl;
     // }
-
-
-    m_shader.draw(gameObject);
-
-
-    // glGenVertexArrays(1, &m_vao);
-    // glBindVertexArray(m_vao);
-    // // Now we have our vertex Array object, which is the rule for the vertex drawing
-    //
-    // glGenBuffers(1, &m_vbo);
-    // glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
-    // // Now we have pointed which is our vertex data using the m_vbo
-    //
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-    // glEnableVertexAttribArray(0);
+    scene.push_back(std::ref(m_object));
 }
 
 
@@ -51,8 +37,12 @@ void Game::run() {
         m_input.beginFrame();
         glfwPollEvents();
 
+
         update();
+        // m_shader.use();
+        m_shader.draw(m_object, m_vao, m_vbo);
         render();
+
 
         glfwSwapBuffers(m_window.getWindow());
     }
@@ -63,15 +53,60 @@ void Game::fixedUpdate(float deltaTime) {
 }
 
 void Game::update() {
+    static float lastTime = (float)glfwGetTime();
+    float currentTime = (float)glfwGetTime();
+    float dt = currentTime - lastTime;
+    lastTime = currentTime;
+    float speed = 1.0f;      // units per second
+    float dy = speed * dt;
 
     // m_input.update(m_window.getWindow());
     if (m_input.pressed(GLFW_KEY_SPACE)) {
         cout << "Space pressed : jump" << endl;
     }
-    if (m_input.pressed(GLFW_KEY_W)) {
+    if (m_input.held(GLFW_KEY_W)) {
+        std::vector<float> vert = m_object.getVertices();
+        for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+            vert[i] += dy;
+        }
+        m_object.setVertices(vert);
         cout << "W pressed : move forward" << endl;
 
     }
+
+    if (m_input.held(GLFW_KEY_D)) {
+        std::vector<float> vert = m_object.getVertices();
+        for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+            vert[i] += dy;
+        }
+        m_object.setVertices(vert);
+        cout << "W pressed : move forward" << endl;
+
+    }
+
+    if (m_input.held(GLFW_KEY_A)) {
+        std::vector<float> vert = m_object.getVertices();
+        for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+            vert[i] -= dy;
+        }
+        m_object.setVertices(vert);
+        cout << "W pressed : move forward" << endl;
+
+    }
+
+    if (m_input.held(GLFW_KEY_S)) {
+        std::vector<float> vert = m_object.getVertices();
+        for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+            vert[i] -= dy;
+        }
+        m_object.setVertices(vert);
+        cout << "W pressed : move forward" << endl;
+
+    }
+
+
+
+
     if (m_input.pressed(GLFW_KEY_S)) {
         cout << "S pressed : move backward" << endl;
     }
@@ -80,8 +115,8 @@ void Game::update() {
 }
 
 void Game::render() {
-    glClearColor(1.0f, 0.0f, 0.25, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    // glClearColor(1.0f, 0.0f, 0.25, 1.0f);
+    // glClear(GL_COLOR_BUFFER_BIT);
 
     m_shader.use();
 
