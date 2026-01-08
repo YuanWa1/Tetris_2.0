@@ -62,17 +62,26 @@ Render::Render(const std::string& vert, const std::string& frag)
     glDeleteShader(fragment);
 }
 
-void Render::draw(GameObject& game_object, unsigned int &vao, unsigned int &vbo ) const {
-    // unsigned int vao, vbo;
+void Render::draw(GameObject& game_object) const {
+    std::vector<int> indices = {
+        0, 1, 3,
+        1, 2, 3
+    };
+    unsigned int vao, vbo, ebo;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     // Now we have our vertex Array object, which is the rule for the vertex drawing
 
     glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
+
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
     const auto& verts = game_object.getVertices();
     glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+
     // Now we have pointed which is our vertex data using the m_vbo
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
@@ -81,9 +90,10 @@ void Render::draw(GameObject& game_object, unsigned int &vao, unsigned int &vbo 
     glBindVertexArray(vao);
 
     use();
-    GLsizei count = (GLsizei)(verts.size() / 3);
-
-    glDrawArrays(GL_TRIANGLES, 0, count);
+    // GLsizei count = (GLsizei)(verts.size() / 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+    // glDrawArrays(GL_TRIANGLES, 0, count);
 
 }
 

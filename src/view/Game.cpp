@@ -5,7 +5,7 @@
 #include "Game.h"
 #include "model/GameObject.h"
 
-Game::Game(): m_window(600, 600, "Tetris_2.0"), m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag"), m_input() {
+Game::Game(): m_window(1200, 1200, "Tetris_2.0"), m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag"), m_input() {
 init();
 }
 
@@ -14,20 +14,22 @@ void Game::init() {
 
     //Create new game object
     GameObject gameObject1;
-    std::vector<float> vertices1 = {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f,
-
-
-    };
-
     GameObject gameObject2;
+
     std::vector<float> vertices2 = {
-        -0.1f, -0.1f, 0.0f,
-         0.1f, -0.1f, 0.0f,
-         0.0f,  0.1f, 0.0f
+        -0.3f,  0.1f, 0.0f,  // top-left
+        -0.3f, -0.1f, 0.0f,  // bottom-left
+         -0.1f, -0.1f, 0.0f,  // bottom-right
+         -0.1f,  0.1f, 0.0f   // top-right
     };
+
+    // RIGHT block (GameObject1): x from 0.0 to 0.2
+    std::vector<float> vertices1 = {
+        0.0f,  0.1f, 0.0f,  // top-left
+        0.0f, -0.1f, 0.0f,  // bottom-left
+        0.2f, -0.1f, 0.0f,  // bottom-right
+        0.2f,  0.1f, 0.0f   // top-right
+   };
 
     gameObject1.setVertices(vertices1);
 
@@ -53,7 +55,7 @@ void Game::run() {
         // m_shader.draw(m_object, m_vao, m_vbo);
         glClear(GL_COLOR_BUFFER_BIT);
         for (auto& object : scene) {
-            m_shader.draw(object,m_vao,m_vbo);
+            m_shader.draw(object);
         }
 
         glfwSwapBuffers(m_window.getWindow());
