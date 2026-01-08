@@ -11,14 +11,18 @@ class GameObject {
 public:
     GameObject() = default;
 
-    ~GameObject() = default;
+    virtual ~GameObject() = default;
 
     void setVertices(std::vector<float> &vertices);
 
     std::vector<float> getVertices();
 
+    void setRenderOrder(int renderOrder);
+
 private:
     std::vector<float> vertices;
+
+    int render0rder;
 };
 
 

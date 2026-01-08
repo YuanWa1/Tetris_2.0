@@ -12,3 +12,7 @@ void GameObject::setVertices(std::vector<float> &vertices) {
 std::vector<float> GameObject::getVertices() {
     return this->vertices;
 }
+
+void GameObject::setRenderOrder(int renderOrder) {
+    this->render0rder = renderOrder;
+}
