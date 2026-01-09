@@ -55,7 +55,7 @@ void Game::run() {
         // m_shader.draw(m_object, m_vao, m_vbo);
         glClear(GL_COLOR_BUFFER_BIT);
         for (auto& object : scene) {
-            m_shader.draw(object);
+            m_shader.draw(object, m_vao, m_vbo);
         }
 
         glfwSwapBuffers(m_window.getWindow());
@@ -119,7 +119,7 @@ void Game::update() {
 
     if (m_input.held(GLFW_KEY_S)) {
         std::vector<float> vert = m_object.getVertices();
-        for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+        for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
             vert[i] -= dy;
         }
         m_object.setVertices(vert);

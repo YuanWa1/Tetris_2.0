@@ -12,11 +12,11 @@
 
 using namespace std;
 
-class CreateWindow {
+class Window {
 
 public:
-    CreateWindow(int width, int height, const char* appName);
-    ~CreateWindow();
+    Window(int width, int height, const char* appName);
+    ~Window();
     void processESC();
     GLFWwindow* getWindow() const;
     static void error_callback(int error, const char* description);

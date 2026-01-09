@@ -21,9 +21,9 @@ target_include_directories(glad PUBLIC
 # Your app
 add_executable(Tetris_2_0
         src/main.cpp
-        src/view/CreateWindow.cpp
-        src/view/Render.cpp
-        src/view/Game.cpp
+        src/view/Window.cpp
+        src/view/Renderer.cpp
+        src/model/Game.cpp
         src/controller/Input.cpp
         src/model/GameObject.cpp
         src/model/GameObject.h

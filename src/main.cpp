@@ -2,9 +2,9 @@
 // Created by Pawan on 1/5/26.
 //
 
-#include "view/CreateWindow.h"
+#include "view/Window.h"
 #include <iostream>
-#include "view/Game.h"
+#include "model/Game.h"
 
 using namespace std;
 

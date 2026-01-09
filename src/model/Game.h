@@ -4,11 +4,11 @@
 
 #ifndef TETRIS_2_0_GAME_H
 #define TETRIS_2_0_GAME_H
-#include  "CreateWindow.h"
-#include  "Render.h"
+#include "../view/Window.h"
+#include "../view/Renderer.h"
 #include "controller/Input.h"
 #include <vector>
-#include  "model/GameObject.h"
+#include  "GameObject.h"
 
 class Game {
 public:
@@ -22,8 +22,8 @@ private:
     void update();
     void render();
 
-    CreateWindow m_window;
-    Render m_shader;
+    Window m_window;
+    Renderer m_shader;
     Input m_input;
 
     std::vector<GameObject> scene;

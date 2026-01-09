@@ -10,10 +10,10 @@
 #include <string>
 #include "vector"
 
-class Render {
+class Renderer {
 public:
-    Render(const std::string& vert, const std::string& frag);
-    void draw(GameObject& game_object) const;
+    Renderer(const std::string& vert, const std::string& frag);
+    void draw(GameObject& game_object, unsigned int &vao, unsigned int &vbo) const;
     void use() const;
     void setBool(const std::string& name, bool value) const;
     void setInt(const std::string& name, int value) const;
