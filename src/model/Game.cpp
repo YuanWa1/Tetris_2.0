@@ -51,11 +51,10 @@ void Game::run() {
 
 
         update();
-        // m_shader.use();
-        // m_shader.draw(m_object, m_vao, m_vbo);
+
         glClear(GL_COLOR_BUFFER_BIT);
         for (auto& object : scene) {
-            m_shader.draw(object, m_vao, m_vbo);
+            m_shader.draw(object);
         }
 
         glfwSwapBuffers(m_window.getWindow());

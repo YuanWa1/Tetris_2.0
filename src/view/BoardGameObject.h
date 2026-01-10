@@ -7,7 +7,7 @@
 
 #include "model/Borad.h"
 
-class BoardGameObject {
+class BoardGameObject : public GameObject{
 };
 
 
