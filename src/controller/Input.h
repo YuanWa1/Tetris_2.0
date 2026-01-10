@@ -5,6 +5,7 @@
 #ifndef TETRIS_2_0_INPUT_H
 #define TETRIS_2_0_INPUT_H
 
+#include <array>
 #include <GLFW/glfw3.h>
 
 class Input {

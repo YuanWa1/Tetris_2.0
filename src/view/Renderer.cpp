@@ -2,13 +2,14 @@
 // Created by Pawan on 1/6/26.
 //
 
-#include "Render.h"
+#include "Renderer.h"
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include "vector"
 
-Render::Render(const std::string& vert, const std::string& frag)
+Renderer::Renderer(const std::string& vert, const std::string& frag)
 {
     std::ifstream vShaderFile;
     std::ifstream fShaderFile;
@@ -61,50 +62,67 @@ Render::Render(const std::string& vert, const std::string& frag)
     glDeleteShader(fragment);
 }
 
-void Render::draw() const {
-    unsigned int vao, vbo;
+void Renderer::draw(GameObject& game_object) const {
+    unsigned int vao, vbo ,ebo;
+
+    std::vector<int> indices = {
+        0, 1, 3,
+        1, 2, 3
+    };
+
+    use();
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     // Now we have our vertex Array object, which is the rule for the vertex drawing
 
     glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), m_vertices.data(), GL_STATIC_DRAW);
+    const auto& verts = game_object.getVertices();
+    glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
     // Now we have pointed which is our vertex data using the m_vbo
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
+    // GLsizei count = (GLsizei)(verts.size() / 3);
+    //
+    // glDrawArrays(GL_TRIANGLES, 0, count);
 
-    glClearColor(1.0f, 0.0f, 0.25, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    // GLsizei count = (GLsizei)(verts.size() / 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+    // glDrawArrays(GL_TRIANGLES, 0, count);
 
-    glBindVertexArray(vao);
-    // use();
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
 }
 
-void Render::use() const
+
+void Renderer::use() const
 {
     glUseProgram(programID);
 }
 
-void Render::setBool(const std::string& name, bool value) const
+void Renderer::setBool(const std::string& name, bool value) const
 {
     glUniform1i(glGetUniformLocation(programID, name.c_str()),
                 static_cast<int>(value));
 }
 
-void Render::setInt(const std::string& name, int value) const
+void Renderer::setInt(const std::string& name, int value) const
 {
     glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
 }
 
-void Render::setFloat(const std::string& name, float value) const
+void Renderer::setFloat(const std::string& name, float value) const
 {
     glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
 }
 
-void Render::checkCompileErrors(unsigned int shader, std::string type)
+void Renderer::checkCompileErrors(unsigned int shader, std::string type)
 {
     int success;
     char infoLog[1024];

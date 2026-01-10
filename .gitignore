@@ -55,3 +55,6 @@ Makefile
 
 
 third_party/glfw
+
+.idea/
+.DS_Store
