@@ -9,7 +9,7 @@ void GameObject::setVertices(std::vector<float> &vertices) {
     this->vertices = vertices;
 }
 
-std::vector<float> GameObject::getVertices() {
+std::vector<float>& GameObject::getVertices() {
     return this->vertices;
 }
 

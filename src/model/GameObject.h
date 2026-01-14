@@ -15,11 +15,13 @@ public:
 
     void setVertices(std::vector<float> &vertices);
 
-    std::vector<float> getVertices();
+    std::vector<float>& getVertices();
 
     void setRenderOrder(int renderOrder);
 
-private:
+    virtual void update() {};
+
+protected:
     std::vector<float> vertices;
 
     int render0rder;

@@ -3,40 +3,66 @@
 //
 
 #include "Game.h"
+
+#include <algorithm>
+#include <iostream>
+
 #include "model/GameObject.h"
 
-Game::Game(): m_window(1200, 1200, "Tetris_2.0"), m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag"), m_input() {
-init();
+#include "model/Board.h"
+#include "view/BoardGameObject.h"
+
+
+Game::Game():
+m_window(1200, 1200, "Tetris_2.0"),
+m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag"),
+m_input() {
+    init();
 }
 
 void Game::init() {
     m_input.init(m_window.getWindow());
 
-    //Create new game object
-    GameObject gameObject1;
-    GameObject gameObject2;
+    //Create new board
+    Board tetris_borad;
 
-    std::vector<float> vertices2 = {
-        -0.3f,  0.1f, 0.0f,  // top-left
-        -0.3f, -0.1f, 0.0f,  // bottom-left
-         -0.1f, -0.1f, 0.0f,  // bottom-right
-         -0.1f,  0.1f, 0.0f   // top-right
-    };
+    tetris_borad.setOccupied(0,0);
+    tetris_borad.setOccupied(1,1);
+    tetris_borad.setOccupied(2,2);
+    tetris_borad.setOccupied(3,3);
+    tetris_borad.setOccupied(4,4);
+    tetris_borad.setOccupied(5,5);
 
-    // RIGHT block (GameObject1): x from 0.0 to 0.2
-    std::vector<float> vertices1 = {
-        0.0f,  0.1f, 0.0f,  // top-left
-        0.0f, -0.1f, 0.0f,  // bottom-left
-        0.2f, -0.1f, 0.0f,  // bottom-right
-        0.2f,  0.1f, 0.0f   // top-right
-   };
+    //Create board game object
+    BoardGameObject board_object(tetris_borad);
 
-    gameObject1.setVertices(vertices1);
 
-    gameObject2.setVertices(vertices2);
 
-    scene.push_back(gameObject1);
-    scene.push_back(gameObject2);
+    for (const auto& row : tetris_borad.board) {
+        // You can create GameObjects for each cell if needed
+        for (const auto& cell : row) {
+            std::cout << cell << " " << std::endl;
+        }
+    }
+
+    std::cout << "test here " << std::endl;
+    std::cout << board_object.getVertices().size() << std::endl;
+
+    int i = 0;
+    for (const auto& test : board_object.getVertices()) {
+        if (i%3 == 0) {
+            std::cout << std::endl;
+        }
+        i++;
+        std::cout << test << " " ;
+    }
+
+    scene.push_back(board_object);
+
+
+
+
+
 
 
 }
@@ -127,9 +153,4 @@ void Game::update() {
     }
 
 
-}
-
-Game::~Game() {
-    glDeleteVertexArrays(1, &m_vao);
-    glDeleteBuffers(1, &m_vbo);
 }

@@ -4,7 +4,6 @@
 
 #include "Window.h"
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 
 Window::Window(int width, int height, const char* appName) {
@@ -19,7 +18,6 @@ Window::Window(int width, int height, const char* appName) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    this->window = glfwCreateWindow(width, height, appName, nullptr, nullptr);
     // --- current primary monitor mode ---
     glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -62,7 +60,7 @@ Window::Window(int width, int height, const char* appName) {
     }
 
     // VSync
-    glfwSwapInterval(1);
+    //glfwSwapInterval(1);
 
     // viewport size
     int fbW, fbH;

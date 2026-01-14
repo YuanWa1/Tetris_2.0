@@ -27,8 +27,8 @@ add_executable(Tetris_2_0
         src/controller/Input.cpp
         src/model/GameObject.cpp
         src/model/GameObject.h
-        src/model/Borad.cpp
-        src/model/Borad.h
+        src/model/Board.cpp
+        src/model/Board.h
         src/view/BoardGameObject.cpp
         src/view/BoardGameObject.h
         # add other .cpp files here

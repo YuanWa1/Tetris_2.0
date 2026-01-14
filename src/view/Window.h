@@ -2,12 +2,10 @@
 // Created by Pawan on 1/5/26.
 //
 
-#ifndef TETRIS_2_0_CREATEWINDOW_H
-#define TETRIS_2_0_CREATEWINDOW_H
+#ifndef TETRIS_2_0_WINDOW_H
+#define TETRIS_2_0_WINDOW_H
 
-
-#include <iostream>
-#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 using namespace std;
@@ -24,7 +22,6 @@ public:
 
 private:
     GLFWwindow* window;
-
 };
 
 #endif //TETRIS_2_0_CREATEWINDOW_H
