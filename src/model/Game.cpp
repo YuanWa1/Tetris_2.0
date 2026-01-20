@@ -15,7 +15,7 @@
 
 Game::Game():
 m_window(1200, 1200, "Tetris_2.0"),
-m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag"),
+m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag", &m_window),
 m_input() {
     init();
 }
@@ -37,31 +37,27 @@ void Game::init() {
     BoardGameObject board_object(tetris_borad);
 
 
-
-    for (const auto& row : tetris_borad.board) {
-        // You can create GameObjects for each cell if needed
-        for (const auto& cell : row) {
-            std::cout << cell << " " << std::endl;
-        }
-    }
+    //
+    // for (const auto& row : tetris_borad.board) {
+    //     // You can create GameObjects for each cell if needed
+    //     for (const auto& cell : row) {
+    //         std::cout << cell << " " << std::endl;
+    //     }
+    // }
 
     std::cout << "test here " << std::endl;
     std::cout << board_object.getVertices().size() << std::endl;
 
-    int i = 0;
-    for (const auto& test : board_object.getVertices()) {
-        if (i%3 == 0) {
-            std::cout << std::endl;
-        }
-        i++;
-        std::cout << test << " " ;
-    }
+    // int i = 0;
+    // for (const auto& test : board_object.getVertices()) {
+    //     if (i%3 == 0) {
+    //         std::cout << std::endl;
+    //     }
+    //     i++;
+    //     std::cout << test << " " ;
+    // }
 
     scene.push_back(board_object);
-
-
-
-
 
 
 
@@ -70,6 +66,7 @@ void Game::init() {
 
 
 void Game::run() {
+
     while (!glfwWindowShouldClose(m_window.getWindow())) {
 
         m_input.beginFrame();

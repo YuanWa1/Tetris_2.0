@@ -3,14 +3,16 @@
 //
 
 #include "Renderer.h"
-
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include "vector"
 
-Renderer::Renderer(const std::string& vert, const std::string& frag)
+
+Renderer::Renderer(const std::string& vert, const std::string& frag, Window* window)
 {
+    m_window = window;
+    std::cout << "Renderer"<< m_window << std::endl;
     std::ifstream vShaderFile;
     std::ifstream fShaderFile;
     std::stringstream vStringStream;
@@ -21,7 +23,8 @@ Renderer::Renderer(const std::string& vert, const std::string& frag)
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    try {
+    try
+    {
         vShaderFile.open(vert);
         fShaderFile.open(frag);
 
@@ -34,7 +37,8 @@ Renderer::Renderer(const std::string& vert, const std::string& frag)
         vertStr = vStringStream.str();
         fragStr = fStringStream.str();
     }
-    catch (const std::ifstream::failure&) {
+    catch (const std::ifstream::failure&)
+    {
         std::cerr << "ERROR::RENDER::SHADER_FILE_NOT_READ\n";
     }
 
@@ -65,6 +69,12 @@ Renderer::Renderer(const std::string& vert, const std::string& frag)
 void Renderer::draw(GameObject& game_object) const {
     unsigned int vao, vbo ,ebo;
     use();
+    //
+    // std::cout << "curr width" << m_window->currWidth << std::endl;
+    // std::cout << "curr height" << m_window->currHeight << std::endl;
+    setFloat("uRatio", (float)m_window->currWidth/(float)m_window->currHeight);
+
+
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     // Now we have our vertex Array object, which is the rule for the vertex drawing
@@ -90,6 +100,7 @@ void Renderer::draw(GameObject& game_object) const {
     glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &ebo);
 }
+
 
 
 void Renderer::use() const
