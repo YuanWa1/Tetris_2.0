@@ -42,8 +42,9 @@ Window::Window(int width, int height, const char* appName) {
     //windowed fallback, you can do:
     window = glfwCreateWindow(width, height, appName, nullptr, nullptr);
 
+    std::cout << "Window created"  << this << std::endl;
     // give opengl a reference to current class
-
+    glfwSetWindowUserPointer(window, this);
 
 
 
@@ -104,9 +105,7 @@ void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height
     glViewport(0, 0, width, height);
     auto* self = static_cast<Window*>(glfwGetWindowUserPointer(window));
     if (!self) return;
-    std::cout << "callback GLFWwindow* @ " << (void*)window
-          << " | userptr self @ " << (void*)self << "\n";
-
+    std::cout << "window" << self <<  std::endl;
     self->currWidth = width;
     self->currHeight = height;
 
