@@ -23,6 +23,9 @@ m_input() {
 void Game::init() {
     m_input.init(m_window.getWindow());
 
+    glfwSetWindowUserPointer(m_window.getWindow(), this);
+    std::cout << "C++ Window object @ " << (void*)this
+      << " | GLFWwindow* @ " << m_window.getWindow() << "\n";
     //Create new board
     Board tetris_borad;
 
