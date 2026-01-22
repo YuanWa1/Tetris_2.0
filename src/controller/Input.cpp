@@ -15,7 +15,6 @@ Input::Input() {
 
 void Input::init(GLFWwindow* window) {
     m_window = window;
-    glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, &Input::keyCallback);
 }
 

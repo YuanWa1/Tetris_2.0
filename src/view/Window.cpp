@@ -42,11 +42,8 @@ Window::Window(int width, int height, const char* appName) {
     //windowed fallback, you can do:
     window = glfwCreateWindow(width, height, appName, nullptr, nullptr);
 
-    std::cout << "Window created"  << this << std::endl;
     // give opengl a reference to current class
     glfwSetWindowUserPointer(window, this);
-
-
 
     if (!window) {
         cout << "Failed to initalize the window" << endl;
