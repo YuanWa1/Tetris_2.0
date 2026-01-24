@@ -4,8 +4,8 @@
 
 #include "Window.h"
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
+#include <view/Renderer.h>
 
 Window::Window(int width, int height, const char* appName) {
     glfwSetErrorCallback(error_callback);
@@ -19,7 +19,6 @@ Window::Window(int width, int height, const char* appName) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    this->window = glfwCreateWindow(width, height, appName, nullptr, nullptr);
     // --- current primary monitor mode ---
     glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -43,6 +42,9 @@ Window::Window(int width, int height, const char* appName) {
     //windowed fallback, you can do:
     window = glfwCreateWindow(width, height, appName, nullptr, nullptr);
 
+    // give opengl a reference to current class
+    glfwSetWindowUserPointer(window, this);
+
     if (!window) {
         cout << "Failed to initalize the window" << endl;
         glfwTerminate();
@@ -62,16 +64,17 @@ Window::Window(int width, int height, const char* appName) {
     }
 
     // VSync
-    glfwSwapInterval(1);
+    //glfwSwapInterval(1);
 
     // viewport size
     int fbW, fbH;
     glfwGetFramebufferSize(window, &fbW, &fbH);
     glViewport(0, 0, fbW, fbH);
+    currWidth = fbW;
+    currHeight = fbH;
 
     //background
     glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
-
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 }
@@ -97,4 +100,10 @@ Window::~Window() {
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
+    auto* self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+    if (!self) return;
+    std::cout << "window" << self <<  std::endl;
+    self->currWidth = width;
+    self->currHeight = height;
+
 }

@@ -15,12 +15,19 @@ public:
 
     void setVertices(std::vector<float> &vertices);
 
-    std::vector<float> getVertices();
+    void setIndices(std::vector<unsigned int> &indices);
+
+    std::vector<float>& getVertices();
+
+    std::vector<unsigned int>& getIndices();
 
     void setRenderOrder(int renderOrder);
 
-private:
+    virtual void update() {};
+
+protected:
     std::vector<float> vertices;
+    std::vector<unsigned int> indices;
 
     int render0rder;
 };

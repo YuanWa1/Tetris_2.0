@@ -3,14 +3,16 @@
 //
 
 #include "Renderer.h"
-
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include "vector"
 
-Renderer::Renderer(const std::string& vert, const std::string& frag)
+
+Renderer::Renderer(const std::string& vert, const std::string& frag, Window* window)
 {
+    m_window = window;
+    std::cout << "Renderer"<< m_window << std::endl;
     std::ifstream vShaderFile;
     std::ifstream fShaderFile;
     std::stringstream vStringStream;
@@ -21,7 +23,8 @@ Renderer::Renderer(const std::string& vert, const std::string& frag)
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    try {
+    try
+    {
         vShaderFile.open(vert);
         fShaderFile.open(frag);
 
@@ -34,7 +37,8 @@ Renderer::Renderer(const std::string& vert, const std::string& frag)
         vertStr = vStringStream.str();
         fragStr = fStringStream.str();
     }
-    catch (const std::ifstream::failure&) {
+    catch (const std::ifstream::failure&)
+    {
         std::cerr << "ERROR::RENDER::SHADER_FILE_NOT_READ\n";
     }
 
@@ -64,13 +68,13 @@ Renderer::Renderer(const std::string& vert, const std::string& frag)
 
 void Renderer::draw(GameObject& game_object) const {
     unsigned int vao, vbo ,ebo;
-
-    std::vector<int> indices = {
-        0, 1, 3,
-        1, 2, 3
-    };
-
     use();
+    //
+    // std::cout << "curr width" << m_window->currWidth << std::endl;
+    // std::cout << "curr height" << m_window->currHeight << std::endl;
+    setFloat("uRatio", (float)m_window->currWidth/(float)m_window->currHeight);
+
+
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     // Now we have our vertex Array object, which is the rule for the vertex drawing
@@ -81,24 +85,22 @@ void Renderer::draw(GameObject& game_object) const {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
     const auto& verts = game_object.getVertices();
+    const auto& indices = game_object.getIndices();
+
     glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_DYNAMIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
-    // Now we have pointed which is our vertex data using the m_vbo
 
+    // Now we have pointed which is our vertex data using the m_vbo
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
-    // GLsizei count = (GLsizei)(verts.size() / 3);
-    //
-    // glDrawArrays(GL_TRIANGLES, 0, count);
 
-    // GLsizei count = (GLsizei)(verts.size() / 3);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-    // glDrawArrays(GL_TRIANGLES, 0, count);
 
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
 }
+
 
 
 void Renderer::use() const

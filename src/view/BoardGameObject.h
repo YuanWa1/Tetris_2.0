@@ -5,9 +5,15 @@
 #ifndef TETRIS_2_0_BOARDGAMEOBJECT_H
 #define TETRIS_2_0_BOARDGAMEOBJECT_H
 
-#include "model/Borad.h"
+#include "model/Board.h"
 
 class BoardGameObject : public GameObject{
+public:
+    BoardGameObject(const Board& b);
+    void update() override {};
+
+private:
+    const Board& m_board;
 };
 
 

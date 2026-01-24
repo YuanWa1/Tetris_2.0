@@ -9,10 +9,11 @@
 #include <glad/glad.h>
 #include <string>
 #include "vector"
+#include "Window.h"
 
 class Renderer {
 public:
-    Renderer(const std::string& vert, const std::string& frag);
+    Renderer(const std::string& vert, const std::string& frag, Window *window);
     void draw(GameObject& game_object) const;
     void use() const;
     void setBool(const std::string& name, bool value) const;
@@ -23,6 +24,7 @@ private:
     GLuint programID;
     unsigned VAO;
     unsigned VBO;
+    Window* m_window;
     //Shaders
     void checkCompileErrors(unsigned int shader, std::string type);
 };

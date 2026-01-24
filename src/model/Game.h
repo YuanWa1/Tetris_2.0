@@ -13,7 +13,7 @@
 class Game {
 public:
     Game();
-    ~Game();
+    ~Game() = default;
     void run();
 
 private:
@@ -28,9 +28,6 @@ private:
 
     std::vector<GameObject> scene;
     // GameObject m_object;
-
-    unsigned int m_vao;
-    unsigned int m_vbo;
 
 };
 
