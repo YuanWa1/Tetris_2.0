@@ -12,7 +12,6 @@
 Renderer::Renderer(const std::string& vert, const std::string& frag, Window* window)
 {
     m_window = window;
-    std::cout << "Renderer"<< m_window << std::endl;
     std::ifstream vShaderFile;
     std::ifstream fShaderFile;
     std::stringstream vStringStream;
@@ -69,9 +68,7 @@ Renderer::Renderer(const std::string& vert, const std::string& frag, Window* win
 void Renderer::draw(GameObject& game_object) const {
     unsigned int vao, vbo ,ebo;
     use();
-    //
-    // std::cout << "curr width" << m_window->currWidth << std::endl;
-    // std::cout << "curr height" << m_window->currHeight << std::endl;
+
     setFloat("uRatio", (float)m_window->currWidth/(float)m_window->currHeight);
 
 

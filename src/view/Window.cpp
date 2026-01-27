@@ -102,7 +102,6 @@ void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height
     glViewport(0, 0, width, height);
     auto* self = static_cast<Window*>(glfwGetWindowUserPointer(window));
     if (!self) return;
-    std::cout << "window" << self <<  std::endl;
     self->currWidth = width;
     self->currHeight = height;
 

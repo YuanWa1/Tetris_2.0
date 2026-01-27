@@ -35,28 +35,6 @@ void Game::init() {
 
     //Create board game object
     BoardGameObject board_object(tetris_borad);
-
-
-    //
-    // for (const auto& row : tetris_borad.board) {
-    //     // You can create GameObjects for each cell if needed
-    //     for (const auto& cell : row) {
-    //         std::cout << cell << " " << std::endl;
-    //     }
-    // }
-
-    std::cout << "test here " << std::endl;
-    std::cout << board_object.getVertices().size() << std::endl;
-
-    // int i = 0;
-    // for (const auto& test : board_object.getVertices()) {
-    //     if (i%3 == 0) {
-    //         std::cout << std::endl;
-    //     }
-    //     i++;
-    //     std::cout << test << " " ;
-    // }
-
     scene.push_back(board_object);
 
 
