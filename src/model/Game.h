@@ -33,7 +33,7 @@ private:
     // Game part
     Board m_board;
     BoardGameObject m_boardGameObject;
-    std::vector<GameObject> scene;
+    std::vector<GameObject*> scene;
 
 };
 

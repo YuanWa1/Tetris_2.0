@@ -9,12 +9,12 @@
 
 class BoardGameObject : public GameObject{
 public:
-    BoardGameObject(const Board& b);
+    BoardGameObject(Board& b);
     void update() override;
     void build();
 
 private:
-    const Board& m_board;
+    Board& m_board;
 };
 
 

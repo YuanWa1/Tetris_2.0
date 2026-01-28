@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-BoardGameObject::BoardGameObject(const Board& b) : m_board(b){
+BoardGameObject::BoardGameObject(Board& b) : m_board(b){
     build();
 }
 
@@ -55,8 +55,10 @@ void BoardGameObject::build()
 
 void BoardGameObject::update()
 {
-    if (m_board.shouldUpdate())
+    // if (m_board.shouldUpdate())
+    if (m_board.boardHasChanged)
     {
         build();
+        m_board.boardHasChanged = false;
     }
 }

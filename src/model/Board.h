@@ -26,9 +26,10 @@ public:
 
     // This function can be used for
     bool shouldUpdate() const;
+    bool boardHasChanged = false;
 
 private:
-    bool boardHasChanged = false;
+
     // bool board[20][10] = {false};
 };
 

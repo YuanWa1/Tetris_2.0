@@ -24,9 +24,7 @@ m_input() {
 
 void Game::init() {
     m_input.init(m_window.getWindow());
-    scene.push_back(m_boardGameObject);
-
-
+    scene.push_back(&m_boardGameObject);
 }
 
 
@@ -43,7 +41,7 @@ void Game::run() {
 
         glClear(GL_COLOR_BUFFER_BIT);
         for (auto& object : scene) {
-            m_shader.draw(object);
+            m_shader.draw(*object);
         }
 
         glfwSwapBuffers(m_window.getWindow());
@@ -63,7 +61,7 @@ void Game::update() {
     float dy = speed * dt;
 
 
-    GameObject& m_object = scene[1];
+    GameObject m_object = *scene[0];
 
     // m_input.update(m_window.getWindow());
     if (m_input.pressed(GLFW_KEY_SPACE)) {
