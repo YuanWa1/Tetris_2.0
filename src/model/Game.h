@@ -8,7 +8,10 @@
 #include "../view/Renderer.h"
 #include "controller/Input.h"
 #include <vector>
+
+#include "Board.h"
 #include  "GameObject.h"
+#include "view/BoardGameObject.h"
 
 class Game {
 public:
@@ -22,12 +25,15 @@ private:
     void update();
     void render();
 
+    // Engine
     Window m_window;
     Renderer m_shader;
     Input m_input;
 
+    // Game part
+    Board m_board;
+    BoardGameObject m_boardGameObject;
     std::vector<GameObject> scene;
-    // GameObject m_object;
 
 };
 

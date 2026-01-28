@@ -16,27 +16,15 @@
 Game::Game():
 m_window(1200, 1200, "Tetris_2.0"),
 m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag", &m_window),
+m_board(),
+m_boardGameObject(m_board),
 m_input() {
     init();
 }
 
 void Game::init() {
     m_input.init(m_window.getWindow());
-
-    //Create new board
-    Board tetris_borad;
-
-    tetris_borad.setOccupied(0,0);
-    tetris_borad.setOccupied(1,1);
-    tetris_borad.setOccupied(2,2);
-    tetris_borad.setOccupied(3,3);
-    tetris_borad.setOccupied(4,4);
-    tetris_borad.setOccupied(5,5);
-
-    //Create board game object
-    BoardGameObject board_object(tetris_borad);
-    scene.push_back(board_object);
-
+    scene.push_back(m_boardGameObject);
 
 
 }
@@ -127,5 +115,6 @@ void Game::update() {
 
     }
 
-
+    m_board.setOccupied(5,5);
+    m_boardGameObject.update();
 }

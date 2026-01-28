@@ -7,6 +7,11 @@
 #include <iostream>
 
 BoardGameObject::BoardGameObject(const Board& b) : m_board(b){
+    build();
+}
+
+void BoardGameObject::build()
+{
     // Initialize vertices based on the board state
     // Center is at (0,0) row/2 and col/2 assuming row and col are even
     std::vector<float> tmp_vertices;
@@ -46,4 +51,12 @@ BoardGameObject::BoardGameObject(const Board& b) : m_board(b){
 
     setVertices(tmp_vertices);
     setIndices(tmp_indices);
+}
+
+void BoardGameObject::update()
+{
+    if (m_board.shouldUpdate())
+    {
+        build();
+    }
 }

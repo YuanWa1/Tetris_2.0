@@ -6,5 +6,10 @@
 
 void Board::setOccupied(int row, int col) {
     board[row][col] = true;
+    boardHasChanged = true;
+}
 
+bool Board::shouldUpdate() const
+{
+    return boardHasChanged;
 }

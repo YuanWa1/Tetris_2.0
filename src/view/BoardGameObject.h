@@ -10,7 +10,8 @@
 class BoardGameObject : public GameObject{
 public:
     BoardGameObject(const Board& b);
-    void update() override {};
+    void update() override;
+    void build();
 
 private:
     const Board& m_board;

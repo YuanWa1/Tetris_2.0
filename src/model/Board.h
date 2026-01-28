@@ -24,7 +24,11 @@ public:
     // bool board[20][10];
     bool board[ROWS][COLS];
 
+    // This function can be used for
+    bool shouldUpdate() const;
+
 private:
+    bool boardHasChanged = false;
     // bool board[20][10] = {false};
 };
 
