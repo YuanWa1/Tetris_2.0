@@ -31,6 +31,8 @@ add_executable(Tetris_2_0
         src/model/Board.h
         src/view/BoardGameObject.cpp
         src/view/BoardGameObject.h
+        src/model/Pieces.cpp
+        src/model/Pieces.h
         # add other .cpp files here
 )
 
