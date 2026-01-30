@@ -20,6 +20,7 @@ public:
 
 private:
     GLFWwindow* m_window = nullptr;
+
     static constexpr int MAX_KEYS = GLFW_KEY_LAST + 1;
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 

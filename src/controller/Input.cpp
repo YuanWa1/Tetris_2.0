@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include "Input.h"
-#include <cstring>
+#include "../view/Window.h"
+
 
 using namespace std;
 
@@ -25,7 +26,7 @@ void Input::beginFrame() {
 
 void Input::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    auto* self = static_cast<Input*>(glfwGetWindowUserPointer(window));
+    auto* self = static_cast<Window*>(glfwGetWindowUserPointer(window)) -> m_input;
     if (!self) return;
 
     if (key < 0 || key >= MAX_KEYS) return;

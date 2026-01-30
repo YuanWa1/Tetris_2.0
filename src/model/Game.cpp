@@ -14,31 +14,17 @@
 
 
 Game::Game():
-m_window(1200, 1200, "Tetris_2.0"),
+m_window(1200, 1200, "Tetris_2.0", &m_input),
 m_shader("assets/shaders/vshader.vert", "assets/shaders/fshader.frag", &m_window),
+m_board(),
+m_boardGameObject(m_board),
 m_input() {
     init();
 }
 
 void Game::init() {
     m_input.init(m_window.getWindow());
-
-    //Create new board
-    Board tetris_borad;
-
-    tetris_borad.setOccupied(0,0);
-    tetris_borad.setOccupied(1,1);
-    tetris_borad.setOccupied(2,2);
-    tetris_borad.setOccupied(3,3);
-    tetris_borad.setOccupied(4,4);
-    tetris_borad.setOccupied(5,5);
-
-    //Create board game object
-    BoardGameObject board_object(tetris_borad);
-    scene.push_back(board_object);
-
-
-
+    scene.push_back(&m_boardGameObject);
 }
 
 
@@ -55,7 +41,7 @@ void Game::run() {
 
         glClear(GL_COLOR_BUFFER_BIT);
         for (auto& object : scene) {
-            m_shader.draw(object);
+            m_shader.draw(*object);
         }
 
         glfwSwapBuffers(m_window.getWindow());
@@ -75,40 +61,44 @@ void Game::update() {
     float dy = speed * dt;
 
 
-    GameObject& m_object = scene[1];
+    GameObject m_object = *scene[0];
 
-    // m_input.update(m_window.getWindow());
+    //m_input.update(m_window.getWindow());
+
     if (m_input.pressed(GLFW_KEY_SPACE)) {
+        static int col = 0;
         cout << "Space pressed : jump" << endl;
+        m_board.setOccupied(5, col);
+        col = (col + 1) % Board::COLS;
     }
 
 
     if (m_input.held(GLFW_KEY_W)) {
-        std::vector<float> vert = m_object.getVertices();
-        for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
-            vert[i] += dy;
-        }
-        m_object.setVertices(vert);
+        // std::vector<float> vert = m_object.getVertices();
+        // for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+        //     vert[i] += dy;
+        // }
+        // m_object.setVertices(vert);
         cout << "W held : move forward" << endl;
 
     }
 
     if (m_input.held(GLFW_KEY_D)) {
-        std::vector<float> vert = m_object.getVertices();
-        for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
-            vert[i] += dy;
-        }
-        m_object.setVertices(vert);
+        // std::vector<float> vert = m_object.getVertices();
+        // for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+        //     vert[i] += dy;
+        // }
+        // m_object.setVertices(vert);
         cout << "D held : move forward" << endl;
 
     }
 
     if (m_input.held(GLFW_KEY_A)) {
-        std::vector<float> vert = m_object.getVertices();
-        for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
-            vert[i] -= dy;
-        }
-        m_object.setVertices(vert);
+        // std::vector<float> vert = m_object.getVertices();
+        // for (int i = 0; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+        //     vert[i] -= dy;
+        // }
+        // m_object.setVertices(vert);
         cout << "A held : move forward" << endl;
 
     }
@@ -118,14 +108,14 @@ void Game::update() {
     }
 
     if (m_input.held(GLFW_KEY_S)) {
-        std::vector<float> vert = m_object.getVertices();
-        for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
-            vert[i] -= dy;
-        }
-        m_object.setVertices(vert);
+        // std::vector<float> vert = m_object.getVertices();
+        // for (int i = 1; i < (int)vert.size(); i += 3) { // y is index 1 of each vec3
+        //     vert[i] -= dy;
+        // }
+        // m_object.setVertices(vert);
         cout << "S held : move forward" << endl;
 
     }
 
-
+    m_boardGameObject.update();
 }

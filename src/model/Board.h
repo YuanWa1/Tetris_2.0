@@ -15,16 +15,21 @@ public:
     Board(): board{false} {};
     ~Board() = default;
 
-    bool isRowFull();
+    bool isRowFull(int rowNumber) const;
 
-    void removeRow();
+    void removeFullRow();
 
     void setOccupied(int row, int col);
 
     // bool board[20][10];
     bool board[ROWS][COLS];
 
+    // This function can be used for
+    bool shouldUpdate() const;
+    bool boardHasChanged = false;
+
 private:
+
     // bool board[20][10] = {false};
 };
 

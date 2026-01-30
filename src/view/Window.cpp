@@ -7,7 +7,9 @@
 #include <iostream>
 #include <view/Renderer.h>
 
-Window::Window(int width, int height, const char* appName) {
+Window::Window(int width, int height, const char* appName, Input* inputPtr){
+    m_input = inputPtr;
+
     glfwSetErrorCallback(error_callback);
 
     if (!glfwInit()) {
