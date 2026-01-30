@@ -7,13 +7,14 @@
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include "../controller/Input.h"
 
 using namespace std;
 
 class Window {
 
 public:
-    Window(int width, int height, const char* appName);
+    Window(int width, int height, const char* appName, Input* inputPtr);
     ~Window();
     void processESC();
     GLFWwindow* getWindow() const;
@@ -22,9 +23,10 @@ public:
 
     //
     int currWidth, currHeight;
-
+    Input* m_input;
 private:
     GLFWwindow* window;
+
 };
 
 #endif //TETRIS_2_0_CREATEWINDOW_H

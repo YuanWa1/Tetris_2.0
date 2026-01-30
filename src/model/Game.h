@@ -26,9 +26,10 @@ private:
     void render();
 
     // Engine
+    Input m_input;
     Window m_window;
     Renderer m_shader;
-    Input m_input;
+
 
     // Game part
     Board m_board;

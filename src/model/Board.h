@@ -15,9 +15,9 @@ public:
     Board(): board{false} {};
     ~Board() = default;
 
-    bool isRowFull();
+    bool isRowFull(int rowNumber) const;
 
-    void removeRow();
+    void removeFullRow();
 
     void setOccupied(int row, int col);
 

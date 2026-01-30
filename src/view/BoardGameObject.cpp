@@ -56,6 +56,8 @@ void BoardGameObject::build()
 void BoardGameObject::update()
 {
     // if (m_board.shouldUpdate())
+    m_board.removeFullRow();
+
     if (m_board.boardHasChanged)
     {
         build();
