@@ -25,8 +25,8 @@ std::vector<float>& GameObject::getVertices() {
 
 
 
-void GameObject::setRenderOrder(int renderOrder) {
-    this->render0rder = renderOrder;
+void GameObject::setRenderOrder(int render_Order) {
+    this->renderOrder = render_Order;
 }
 
 

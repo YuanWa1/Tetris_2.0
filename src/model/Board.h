@@ -5,8 +5,6 @@
 #ifndef TETRIS_2_0_BORAD_H
 #define TETRIS_2_0_BORAD_H
 
-#include "GameObject.h"
-
 class Board{
 public:
     static constexpr int ROWS = 20;

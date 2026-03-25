@@ -21,7 +21,7 @@ public:
 
     std::vector<unsigned int>& getIndices();
 
-    void setRenderOrder(int renderOrder);
+    void setRenderOrder(int render_Order);
 
     virtual void update() {};
 
@@ -29,7 +29,7 @@ protected:
     std::vector<float> vertices;
     std::vector<unsigned int> indices;
 
-    int render0rder;
+    int renderOrder;
 };
 
 

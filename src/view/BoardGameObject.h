@@ -6,6 +6,7 @@
 #define TETRIS_2_0_BOARDGAMEOBJECT_H
 
 #include "model/Board.h"
+#include "../model/GameObject.h"
 
 class BoardGameObject : public GameObject{
 public:
